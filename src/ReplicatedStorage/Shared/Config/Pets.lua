@@ -10,16 +10,19 @@ return {
     Rarity = "Rare",
     Type = "Fire",
     Attributes = {
-      Health = 50,
+      MaxHealth = 50,
+      CurrentHealth = 50,
       Attack = 60,
       Defense = 50,
       Speed = 35,
       CritChance = 5,
     },
+    SpeedBar = 0,
     Skills = {
       ["Flame Burst"] = true, -- Attack an enemy once
       ["Rage Strike"] = false, -- Attack an enemy. Damage increases with lower health.
     },
+    StatusEffects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
   Sad = {
@@ -33,16 +36,19 @@ return {
     Rarity = "Rare",
     Type = "Water",
     Attributes = {
-      Health = 55,
+      MaxHealth = 55,
+      CurrentHealth = 55,
       Attack = 52,
       Defense = 46,
       Speed = 30,
       CritChance = 4,
     },
+    SpeedBar = 0,
     Skills = {
       ["Weeping Cry"] = true, -- Attack an enemy once
       ["Sorrow Aura"] = false, -- Attack all enemies
     },
+    StatusEffects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
   Courage = {
@@ -56,16 +62,19 @@ return {
     Rarity = "Rare",
     Type = "Earth",
     Attributes = {
-      Health = 65,
+      MaxHealth = 65,
+      CurrentHealth = 65,
       Attack = 57,
       Defense = 50,
       Speed = 32,
       CritChance = 5,
     },
+    SpeedBar = 0,
     Skills = {
       ["Charge of Valor"] = true, -- Attack an enemy once
       ["Inspiring Shout"] = false, -- Buff attack of all allies for 2 turns
     },
+    StatusEffects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
   Happy = {
@@ -79,16 +88,19 @@ return {
     Rarity = "Rare",
     Type = "Fire",
     Attributes = {
-      Health = 60,
+      MaxHealth = 60,
+      CurrentHealth = 60,
       Attack = 60,
       Defense = 52,
       Speed = 40,
       CritChance = 6,
     },
+    SpeedBar = 0,
     Skills = {
       ["Joyful Cheer"] = true, -- Attack an enemy once
       ["Celebration Blast"] = false, -- Attack all enemies
     },
+    StatusEffects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
 
