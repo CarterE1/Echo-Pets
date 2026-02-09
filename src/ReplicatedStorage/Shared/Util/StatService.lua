@@ -15,5 +15,8 @@ function StatService:GetPetStats(petData)
   newPetAttributes.Speed = petData.Attributes.Speed * levelMultiplier
   newPetAttributes.CritChance = petData.Attributes.CritChance * (1 + (petData.Level - 1) * 0.01) -- 1% increase in crit chance per level
   
+  print("Generated skills for new pet: " .. tostring(#petData.Skills))
   return newPet
 end
+
+return StatService

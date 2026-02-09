@@ -17,14 +17,11 @@ export type PetData = {
         CritChance: number,
     },
     SpeedBar: number, -- Current value of the pet's speed bar for turn order
-    Skills: { -- Skills learned by the pet
-        [string]: boolean, -- SkillID mapped to whether the pet has learned it
-    },
-    StatusEffects: { -- Status effects currently affecting the pet
-        [string]: { -- StatusEffectID
+    Skills: {{SkillID: string, IsLearned: boolean}}, -- Array of skills with their learned status
+    Effects: {{ -- Status effects currently affecting the pet
+            EffectID: string, -- Identifier for the status effect (e.g., "Burn", "Poison", "AttackBuff")
             Duration: number, -- Remaining duration of the status effect in turns
             Potency: number, -- Strength of the status effect (e.g., damage per turn, buff amount)
-        },
-    },
+    }},
     OwnerUserId: number, -- UserId of the pet's owner
 }

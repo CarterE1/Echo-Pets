@@ -19,10 +19,10 @@ return {
     },
     SpeedBar = 0,
     Skills = {
-      ["Flame Burst"] = true, -- Attack an enemy once
-      ["Rage Strike"] = false, -- Attack an enemy. Damage increases with lower health.
+      {SkillID = "Flame Burst", IsLearned = true}, -- Attack an enemy once
+      {SkillID = "Rage Strike", IsLearned = false}, -- Attack an enemy. Damage increases with lower health.
     },
-    StatusEffects = {}, -- No status effects at creation
+    Effects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
   Sad = {
@@ -45,10 +45,10 @@ return {
     },
     SpeedBar = 0,
     Skills = {
-      ["Weeping Cry"] = true, -- Attack an enemy once
-      ["Sorrow Aura"] = false, -- Attack all enemies
+      {SkillID = "Weeping Cry", IsLearned = true}, -- Attack an enemy once
+      {SkillID = "Sorrow Aura", IsLearned = false}, -- Attack all enemies
     },
-    StatusEffects = {}, -- No status effects at creation
+    Effects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
   Courage = {
@@ -71,10 +71,10 @@ return {
     },
     SpeedBar = 0,
     Skills = {
-      ["Charge of Valor"] = true, -- Attack an enemy once
-      ["Inspiring Shout"] = false, -- Buff attack of all allies for 2 turns
+      {SkillID = "Charge of Valor", IsLearned = true}, -- Attack an enemy once
+      {SkillID = "Inspiring Shout", IsLearned = false}, -- Buff attack of all allies for 2 turns
     },
-    StatusEffects = {}, -- No status effects at creation
+    Effects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
   Happy = {
@@ -97,10 +97,10 @@ return {
     },
     SpeedBar = 0,
     Skills = {
-      ["Joyful Cheer"] = true, -- Attack an enemy once
-      ["Celebration Blast"] = false, -- Attack all enemies
+      {SkillID = "Joyful Cheer", IsLearned = true}, -- Attack an enemy once
+      {SkillID = "Celebration Blast", IsLearned = false}, -- Attack all enemies
     },
-    StatusEffects = {}, -- No status effects at creation
+    Effects = {}, -- No status effects at creation
     OwnerUserId = nil, -- To be set when the pet is owned
   },
 

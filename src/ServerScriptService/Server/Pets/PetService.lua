@@ -17,3 +17,5 @@ function PetService:CreateNewPet(petID, ownerUserId)
   return petData
 end
 
+return PetService
+

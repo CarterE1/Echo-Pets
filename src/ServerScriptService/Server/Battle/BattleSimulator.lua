@@ -13,18 +13,28 @@ local BattleSimulator = {}
 
 function BattleSimulator:SimulateBattle(playerTeam, enemyTeam)
 
-  for _, pet in ipairs(playerTeam + enemyTeam) do
+  for _, pet in ipairs(playerTeam) do
+    pet = StatService:GetPetStats(pet)
+  end
+  for _, pet in ipairs(enemyTeam) do
     pet = StatService:GetPetStats(pet)
   end
 
+  local turn = 0
   while #playerTeam > 0 and #enemyTeam > 0 do
+    turn = turn + 1
+    print("Turn " .. tostring(turn))
+    if turn > 100 then
+      print("Battle is taking too long, ending in a draw!")
+      return
+    end
 
     -- Determine turn order based on Speed stat of the first pet in each team
     local smallestTimeToAct = math.huge
     
     for _, pet in ipairs(playerTeam) do
       local fillRate = pet.Attributes.Speed
-      local timeToAct = (100 - pet.speedBar) / fillRate
+      local timeToAct = (100 - pet.SpeedBar) / fillRate
 
       if timeToAct < smallestTimeToAct then
         smallestTimeToAct = timeToAct
@@ -32,7 +42,7 @@ function BattleSimulator:SimulateBattle(playerTeam, enemyTeam)
     end
     for _, pet in ipairs(enemyTeam) do
       local fillRate = pet.Attributes.Speed
-      local timeToAct = (100 - pet.speedBar) / fillRate
+      local timeToAct = (100 - pet.SpeedBar) / fillRate
 
       if timeToAct < smallestTimeToAct then
         smallestTimeToAct = timeToAct
@@ -43,7 +53,7 @@ function BattleSimulator:SimulateBattle(playerTeam, enemyTeam)
     local nextActors = {}
 
     -- Advance time and fill speed bars for all pets
-    for _, pet in ipairs(playerTeam + enemyTeam) do
+    local function checkSpeedBar(pet)
       pet.SpeedBar = math.min(100, pet.SpeedBar + pet.Attributes.Speed * smallestTimeToAct)
 
       if pet.SpeedBar >= 100 then
@@ -57,6 +67,12 @@ function BattleSimulator:SimulateBattle(playerTeam, enemyTeam)
         end
         table.insert(nextActors, {team = team, index = index, pet = pet})
       end
+    end
+    for _, pet in ipairs(playerTeam) do
+      checkSpeedBar(pet)
+    end
+    for _, pet in ipairs(enemyTeam) do
+      checkSpeedBar(pet)
     end
 
     -- Process actions for all pets that are ready to act
@@ -74,31 +90,23 @@ function BattleSimulator:SimulateBattle(playerTeam, enemyTeam)
       if actor.team == "player" then
         local target = enemyTeam[1]
         if target then
-          if SkillConfig[target.Skills[1]] then
-            local skill = SkillConfig[target.Skills[1]]
-            target.Attributes.CurrentHealth = target.Attributes.CurrentHealth - pet.Attributes.Attack * (1 + (skill.Power / 100))
-            print(pet.Name .. " used " .. skill.Name .. " on " .. target.Name .. " for " .. tostring(pet.Attributes.Attack * (1 + (skill.Power / 100))) .. " damage!")
-            if target.Attributes.CurrentHealth <= 0 then
-              print(target.Name .. " has been defeated!")
-              table.remove(enemyTeam, actor.index) -- Remove defeated enemy from team
-            end
-          else
-            print(pet.Name .. " has no skills to use!")
+          local skill = SkillConfig[target.Skills[1].SkillID]
+          target.Attributes.CurrentHealth = target.Attributes.CurrentHealth - pet.Attributes.Attack * (1 + (skill.Power / 100))
+          print(pet.Name .. " used " .. skill.Name .. " on " .. target.Name .. " for " .. tostring(pet.Attributes.Attack * (1 + (skill.Power / 100))) .. " damage!")
+          if target.Attributes.CurrentHealth <= 0 then
+            print(target.Name .. " has been defeated!")
+            table.remove(enemyTeam, actor.index) -- Remove defeated enemy from team
           end
         end
       else -- enemy team acting
         local target = playerTeam[1]
         if target then
-          if SkillConfig[target.Skills[1]] then
-            local skill = SkillConfig[target.Skills[1]]
-            target.Attributes.CurrentHealth = target.Attributes.CurrentHealth - pet.Attributes.Attack * (1 + (skill.Power / 100))
-            print(pet.Name .. " used " .. skill.Name .. " on " .. target.Name .. " for " .. tostring(pet.Attributes.Attack * (1 + (skill.Power / 100))) .. " damage!")
-            if target.Attributes.CurrentHealth <= 0 then
-              print(target.Name .. " has been defeated!")
-              table.remove(playerTeam, actor.index) -- Remove defeated player pet from team
-            end
-          else
-            print(pet.Name .. " has no skills to use!")
+          local skill = SkillConfig[target.Skills[1].SkillID]
+          target.Attributes.CurrentHealth = target.Attributes.CurrentHealth - pet.Attributes.Attack * (1 + (skill.Power / 100))
+          print(pet.Name .. " used " .. skill.Name .. " on " .. target.Name .. " for " .. tostring(pet.Attributes.Attack * (1 + (skill.Power / 100))) .. " damage!")
+          if target.Attributes.CurrentHealth <= 0 then
+            print(target.Name .. " has been defeated!")
+            table.remove(playerTeam, actor.index) -- Remove defeated player pet from team
           end
         end
       end
@@ -111,3 +119,5 @@ function BattleSimulator:SimulateBattle(playerTeam, enemyTeam)
     print("Enemy team wins!")
   end
 end
+
+return BattleSimulator
